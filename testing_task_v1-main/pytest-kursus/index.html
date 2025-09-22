@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="et">
+<head>
+  <meta charset="utf-8">
+  <title>Pytest kursus – A/B/C ülesanded</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root{
+      --bg:#0e0f14; --card:#151826; --text:#e7e9f2; --muted:#9aa3b2; --accent:#6aa6ff; --ok:#43d17d; --warn:#ffd166;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#0b0c11,#0e0f14);}
+    header{padding:32px 20px;text-align:center;color:var(--text)}
+    header h1{margin:0 0 6px 0;font-size:28px}
+    header p{margin:0;color:var(--muted)}
+    main{max-width:1100px;margin:20px auto;padding:20px;display:grid;gap:20px;grid-template-columns:1fr}
+    .card{background:var(--card);border:1px solid #23263a; border-radius:16px; padding:18px 20px; color:var(--text); box-shadow:0 10px 30px rgba(0,0,0,.3)}
+    h2,h3{margin:8px 0 10px 0}
+    code,pre{background:#0c0d13;border:1px solid #22253a;color:#dfe3ff;border-radius:10px}
+    pre{padding:12px;overflow:auto}
+    .pill{display:inline-block;padding:4px 10px;border-radius:999px;background:#101223;border:1px solid #22263b;color:#aeb6c8;font-size:12px}
+    .grid{display:grid;gap:12px}
+    .two{grid-template-columns:1fr 1fr}
+    .ok{color:var(--ok)}
+    .accent{color:var(--accent)}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    ul{margin:8px 0 8px 18px}
+    .kbd{background:#0c0d13;border:1px solid #22253a;border-bottom-width:3px;padding:2px 6px;border-radius:6px;font-family:ui-monospace, SFMono-Regular, Menlo, monospace}
+    .interactive-demo{margin:15px 0;padding:15px;background:#0c0d13;border-radius:10px;border:1px solid #22253a}
+    .function-test{margin:10px 0;padding:10px;background:#151826;border-radius:8px;border:1px solid #23263a}
+    .function-test h4{margin:0 0 8px 0;color:var(--accent);font-family:ui-monospace, SFMono-Regular, Menlo, monospace}
+    .function-test button{background:var(--accent);color:white;border:none;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px}
+    .function-test button:hover{background:#5a9eff}
+    .result{margin-top:8px;padding:8px;border-radius:6px;font-family:ui-monospace, SFMono-Regular, Menlo, monospace;font-size:12px}
+    .result.pass{background:#1a3d2a;color:var(--ok);border:1px solid #2d5a3d}
+    .result.fail{background:#3d2a1a;color:var(--warn);border:1px solid #5a3d2d}
+    .result.info{background:#1a2a3d;color:var(--accent);border:1px solid #2d3d5a}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Pytest mini-kursus (A → C)</h1>
+    <p>Kirjuta teste, et leida vigane kood. <span class="pill">Fookus: testide kirjutamine</span></p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Kiirkäivitus</h2>
+      <ul>
+        <li>Vaata funktsioone <span class="kbd">src/</span> failides.</li>
+        <li>Kirjuta teste <span class="kbd">tests/</span> failides.</li>
+        <li>Käivita kõik testid: <code>pytest -q</code></li>
+        <li>Käivita ainult A-osa testid: <code>pytest -q tests/test_a_basics.py</code></li>
+        <li>Käivita üks test nime järgi: <code>pytest -q -k test_add_basic</code></li>
+      </ul>
+      <p class="accent">Mõned funktsioonid on tahtlikult vigased - sinu testid peaksid need leidma!</p>
+    </section>
+
+    <section class="card">
+      <h2>A. Funktsionaalsed alustõed (a_basics.py)</h2>
+      <p>Üldine juhend: vaata funktsioone ja kirjuta teste, et kontrollida nende õigsust. Mõned funktsioonid võivad olla vigased!</p>
+      <h3>Proovi funktsioone siin:</h3>
+      <div class="interactive-demo">
+        <div class="function-test">
+          <h4>abs_val(-5)</h4>
+          <button onclick="testAbsVal()">Testi</button>
+          <div id="abs_val-result" class="result"></div>
+        </div>
+        <div class="function-test">
+          <h4>max3(3,7,5)</h4>
+          <button onclick="testMax3()">Testi</button>
+          <div id="max3-result" class="result"></div>
+        </div>
+        <div class="function-test">
+          <h4>repeat("hi", 3)</h4>
+          <button onclick="testRepeat()">Testi</button>
+          <div id="repeat-result" class="result"></div>
+        </div>
+        <div class="function-test">
+          <h4>first_last("hello")</h4>
+          <button onclick="testFirstLast()">Testi</button>
+          <div id="first_last-result" class="result"></div>
+        </div>
+      </div>
+      <h3>Näide testist</h3>
+      <pre><code># Näide (abs test)
+def test_abs_val_basic():
+    assert abs_val(-5) == 5
+    assert abs_val(0) == 0
+</code></pre>
+    </section>
+
+    <section class="card">
+      <h2>B. Kogud ja failid (b_collections_io.py)</h2>
+      <p>Üldine juhend: vaata funktsioone, mis töötlevad loendeid ja sõnastikke. Kirjuta teste, et kontrollida nende õigsust. Mõned funktsioonid võivad olla vigased!</p>
+      <h3>Proovi funktsioone siin:</h3>
+      <div class="interactive-demo">
+        <div class="function-test">
+          <h4>sum_unique([1,2,2,3])</h4>
+          <button onclick="testSumUnique()">Testi</button>
+          <div id="sum-unique-result" class="result"></div>
+        </div>
+        <div class="function-test">
+          <h4>dict_invert({"a":1,"b":2})</h4>
+          <button onclick="testDictInvert()">Testi</button>
+          <div id="dict-invert-result" class="result"></div>
+        </div>
+        <div class="function-test">
+          <h4>frequencies([1,2,2,3,3,3])</h4>
+          <button onclick="testFrequencies()">Testi</button>
+          <div id="frequencies-result" class="result"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>C. Moodul + klass + servajuhtumid (c_module.py)</h2>
+      <p>Üldine juhend: vaata klassi ja funktsioone, mis hoiavad invariante. Kirjuta teste, et kontrollida nende õigsust ja servajuhtumeid.</p>
+      <h3>Proovi funktsioone siin:</h3>
+      <div class="interactive-demo">
+        <div class="function-test">
+          <h4>fibonacci(10)</h4>
+          <button onclick="testFibonacci()">Testi</button>
+          <div id="fibonacci-result" class="result"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function showResult(elementId, isPass, message) {
+      const element = document.getElementById(elementId);
+      element.className = `result ${isPass ? 'pass' : 'fail'}`;
+      element.textContent = message;
+    }
+
+    function approxEqual(a, b, tol=1e-6) {
+      return Math.abs(a-b) < tol;
+    }
+
+    function abs_val(x) {
+      return Math.abs(x);
+    }
+    function max3(a,b,c) {
+      return Math.max(a,b,c);
+    }
+    function repeat(s,n) {
+      return s.repeat(n);
+    }
+    function first_last(s) {
+      return s ? {first: s[0], last: s[s.length-1]} : {first:null, last:null};
+    }
+    function sum_unique(nums) {
+      return [...new Set(nums)].reduce((a,b)=>a+b,0);
+    }
+    function dict_invert(d) {
+      const res = {};
+      for (const k in d) res[d[k]] = k;
+      return res;
+    }
+    function frequencies(nums) {
+      const res = {};
+      for (const x of nums) res[x] = (res[x]||0)+1;
+      return res;
+    }
+
+    function testAbsVal() {
+      const result = abs_val(-5);
+      const expected = 5;
+      const more = abs_val(0)===0 && abs_val(10)===10;
+      showResult('abs_val-result', result===expected && more, 
+        `Tulemus: ${result} | Oodatud: ${expected} | ${result===expected && more ? 'PASS' : 'FAIL'}`);
+    }
+    function testMax3() {
+      const result = max3(3,7,5);
+      const expected = 7;
+      showResult('max3-result', result===expected, 
+        `Tulemus: ${result} | Oodatud: ${expected} | ${result===expected ? 'PASS' : 'FAIL'}`);
+    }
+    function testRepeat() {
+      const result = repeat("hi",3);
+      const expected = "hihihi";
+      showResult('repeat-result', result===expected, 
+        `Tulemus: ${result} | Oodatud: ${expected} | ${result===expected ? 'PASS' : 'FAIL'}`);
+    }
+    function testFirstLast() {
+      const result = first_last("hello");
+      const expected = {first:"h", last:"o"};
+      const isCorrect = result.first===expected.first && result.last===expected.last;
+      showResult('first_last-result', isCorrect, 
+        `Tulemus: {first:${result.first}, last:${result.last}} | Oodatud: {first:${expected.first}, last:${expected.last}} | ${isCorrect ? 'PASS' : 'FAIL'}`);
+    }
+    function testSumUnique() {
+      const result = sum_unique([1,2,2,3]);
+      const expected = 6;
+      showResult('sum-unique-result', result===expected, 
+        `Tulemus: ${result} | Oodatud: ${expected} | ${result===expected ? 'PASS' : 'FAIL'}`);
+    }
+    function testDictInvert() {
+      const result = dict_invert({"a":1,"b":2});
+      const expected = {1:"a",2:"b"};
+      const isCorrect = JSON.stringify(result)===JSON.stringify(expected);
+      showResult('dict-invert-result', isCorrect,
+        `Tulemus: ${JSON.stringify(result)} | Oodatud: ${JSON.stringify(expected)} | ${isCorrect ? 'PASS' : 'FAIL'}`);
+    }
+    function testFrequencies() {
+      const result = frequencies([1,2,2,3,3,3]);
+      const expected = {1:1,2:2,3:3};
+      const isCorrect = JSON.stringify(result)===JSON.stringify(expected);
+      showResult('frequencies-result', isCorrect,
+        `Tulemus: ${JSON.stringify(result)} | Oodatud: ${JSON.stringify(expected)} | ${isCorrect ? 'PASS' : 'FAIL'}`);
+    }
+
+    function fibonacci(n) {
+      if (n<0) throw new Error("Negatiivne");
+      if(n===0) return 0;
+      if(n===1) return 1;
+      return fibonacci(n-1)+fibonacci(n-2);
+    }
+    function testFibonacci() {
+      const result = fibonacci(10);
+      const expected = 55;
+      showResult('fibonacci-result', result===expected, 
+        `Tulemus: ${result} | Oodatud: ${expected} | ${result===expected ? 'PASS' : 'FAIL'}`);
+    }
+  </script>
+</body>
+</html>
