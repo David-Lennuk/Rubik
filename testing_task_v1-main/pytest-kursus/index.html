@@ -135,36 +135,46 @@ def test_abs_val_basic():
       element.textContent = message;
     }
 
-    function approxEqual(a, b, tol=1e-6) {
-      return Math.abs(a-b) < tol;
-    }
-
     function abs_val(x) {
       return Math.abs(x);
     }
+
     function max3(a,b,c) {
       return Math.max(a,b,c);
     }
+
     function repeat(s,n) {
       return s.repeat(n);
     }
+
     function first_last(s) {
       return s ? {first: s[0], last: s[s.length-1]} : {first:null, last:null};
     }
+
     function sum_unique(nums) {
       return [...new Set(nums)].reduce((a,b)=>a+b,0);
     }
+
     function dict_invert(d) {
       const res = {};
       for (const k in d) res[d[k]] = k;
       return res;
     }
+
     function frequencies(nums) {
       const res = {};
       for (const x of nums) res[x] = (res[x]||0)+1;
       return res;
     }
 
+    function fibonacci(n) {
+      if (n<0) throw new Error("Negatiivne sisend");
+      if(n===0) return 0;
+      if(n===1) return 1;
+      return fibonacci(n-1)+fibonacci(n-2);
+    }
+
+    // Testifunktsioonid
     function testAbsVal() {
       const result = abs_val(-5);
       const expected = 5;
@@ -172,18 +182,21 @@ def test_abs_val_basic():
       showResult('abs_val-result', result===expected && more, 
         `Tulemus: ${result} | Oodatud: ${expected} | ${result===expected && more ? 'PASS' : 'FAIL'}`);
     }
+
     function testMax3() {
       const result = max3(3,7,5);
       const expected = 7;
       showResult('max3-result', result===expected, 
         `Tulemus: ${result} | Oodatud: ${expected} | ${result===expected ? 'PASS' : 'FAIL'}`);
     }
+
     function testRepeat() {
       const result = repeat("hi",3);
       const expected = "hihihi";
       showResult('repeat-result', result===expected, 
         `Tulemus: ${result} | Oodatud: ${expected} | ${result===expected ? 'PASS' : 'FAIL'}`);
     }
+
     function testFirstLast() {
       const result = first_last("hello");
       const expected = {first:"h", last:"o"};
@@ -191,12 +204,14 @@ def test_abs_val_basic():
       showResult('first_last-result', isCorrect, 
         `Tulemus: {first:${result.first}, last:${result.last}} | Oodatud: {first:${expected.first}, last:${expected.last}} | ${isCorrect ? 'PASS' : 'FAIL'}`);
     }
+
     function testSumUnique() {
       const result = sum_unique([1,2,2,3]);
       const expected = 6;
       showResult('sum-unique-result', result===expected, 
         `Tulemus: ${result} | Oodatud: ${expected} | ${result===expected ? 'PASS' : 'FAIL'}`);
     }
+
     function testDictInvert() {
       const result = dict_invert({"a":1,"b":2});
       const expected = {1:"a",2:"b"};
@@ -204,6 +219,7 @@ def test_abs_val_basic():
       showResult('dict-invert-result', isCorrect,
         `Tulemus: ${JSON.stringify(result)} | Oodatud: ${JSON.stringify(expected)} | ${isCorrect ? 'PASS' : 'FAIL'}`);
     }
+
     function testFrequencies() {
       const result = frequencies([1,2,2,3,3,3]);
       const expected = {1:1,2:2,3:3};
@@ -212,12 +228,6 @@ def test_abs_val_basic():
         `Tulemus: ${JSON.stringify(result)} | Oodatud: ${JSON.stringify(expected)} | ${isCorrect ? 'PASS' : 'FAIL'}`);
     }
 
-    function fibonacci(n) {
-      if (n<0) throw new Error("Negatiivne");
-      if(n===0) return 0;
-      if(n===1) return 1;
-      return fibonacci(n-1)+fibonacci(n-2);
-    }
     function testFibonacci() {
       const result = fibonacci(10);
       const expected = 55;
