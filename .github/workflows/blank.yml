@@ -28,4 +28,4 @@ jobs:
 
       - name: Käivita testid
         run: |
-          pytest testing_task_v1-main/pytest-kursus/tests --maxfail=1 --disable-warnings -q
+          pytest testing_task_v1/pytest-kursus/tests --maxfail=1 --disable-warnings -q
