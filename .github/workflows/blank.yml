@@ -28,4 +28,4 @@ jobs:
 
       - name: Käivita testid
         run: |
-          PYTHONPATH=testing_task_v1-main/pytest-kursus/src pytest testing_task_v1-main/pytest-kursus/tests --maxfail=5 --disable-warnings -q
+          PYTHONPATH=testing_task_v1-main/pytest-kursus pytest testing_task_v1-main/pytest-kursus/tests --maxfail=5 --disable-warnings -q
